@@ -23,6 +23,7 @@
 
     <modules>
         <module>rest-server</module>
+        <module>watering-web</module>
     </modules>
 
 </project>
