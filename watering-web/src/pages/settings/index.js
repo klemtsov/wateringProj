@@ -11,7 +11,7 @@ const mapStateToProps = function (store) {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onSave: value => {
-            console.log('onSave param', value)
+            console.log('onSave param', value);
             dispatch(saveSettings(value))
         },
         onNeedSave: value => {
@@ -19,11 +19,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         },
         loadData: () => dispatch(getSettings())
     }
-}
+};
 
 const SettingForm = connect(
     mapStateToProps,
     mapDispatchToProps
-)(SettingValues)
+)(SettingValues);
 
 export default SettingForm
