@@ -2,8 +2,6 @@ import React from 'react'
 import SaveIcon from '@material-ui/icons/Save'
 import classNames from 'classnames'
 import Button from '@material-ui/core/Button'
-import {withStyles} from '@material-ui/core/styles'
-import {connect} from 'react-redux'
 
 function Buttons(props) {
     const {classes} = props;

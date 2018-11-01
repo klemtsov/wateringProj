@@ -3,7 +3,7 @@ import * as types from '../constants/ActionTypes'
 export const getInitialForm = {
     needSave: false,
     fetching: false
-}
+};
 
 const initialState = {
     device: {
@@ -15,12 +15,12 @@ const initialState = {
         serverIp: ''
     },
     form: getInitialForm
-}
+};
 
 export default function settingsReducer(state = initialState, action) {
     const {payload} = action;
     const {form} = state.form;
-    console.log('in reducer payliad', payload)
+    console.log('in reducer payliad', payload);
 
     switch (action.type) {
         case types.SETTINGS_GET_REQUEST: {
@@ -47,8 +47,6 @@ export default function settingsReducer(state = initialState, action) {
             //let newDevice = {...device, wateringPeriod: newWateringPrtiod};
             return {...payload, device, form: form};
         }
-            ;
-
         case types.SETTINGS_SAVE_ERROR: {
             //TODO реализовать логику обработки ошибки
             console.error('Ошибка при сохранении настроек на сервер', payload);
