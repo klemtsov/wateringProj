@@ -7,9 +7,9 @@ export const getInitialForm = {
 
 const initialState = {
     device: {
-        ip: '192.168.0.1',
+        ip: '',
         wateringPeriod: 0,
-        wateringStartAt: '18:00',
+        wateringStartAt: '',
         startWateringBelowHumidity: 0,
         timeWateringInSec: 10,
         serverIp: ''

@@ -3,11 +3,20 @@ import axios from 'axios'
 import {rootApi, getSettingsMethod, saveSettingsMethod} from '../constants/api'
 import {getInitialForm} from '../reducers/settings'
 
+const config = {
+    headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': "*",
+        'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE',
+        //'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+    }
+};
+
 export function getSettings() {
     return dispatch => {
         dispatch(getSettingsRequest());
 
-        const url = rootApi + getSettingsMethod;
+        const url = getSettingsMethod;
         axios.get(url).then(response =>
             dispatch(getSettingsSuccess(response.data))).catch(response => {
             dispatch(getSettingsError(response))
@@ -24,11 +33,16 @@ export function getSettingsRequest() {
     };
 }
 
-export function getSettingsSuccess(deviceSettings) {
+export function getSettingsSuccess(response) {
+    console.log("getSettingsSuccess", response);
+    const result = response.result;
+    if (response.status !== "SUCCESS") {
+       return getSettingsError(response.errors)
+    }
     return {
         type: types.SETTINGS_GET_SUCCESS,
         payload: {
-            device: deviceSettings,
+            device: result,
             form: getInitialForm
         }
     }
@@ -54,10 +68,11 @@ export function saveSettings(settings) {
     return dispatch => {
         dispatch(saveSettingsRequest(form));
 
-        const url = rootApi + saveSettingsMethod;
+        const url = saveSettingsMethod;
         console.log('url', url);
-        axios.post(url).then(response =>
-            dispatch(saveSettingsSuccess(settings.device, response.data))).catch(response => {
+
+        axios.post(url, JSON.stringify(settings.device), config).then(response =>
+            dispatch(saveSettingsSuccess(response.data))).catch(response => {
             dispatch(saveSettingsError(settings, response))
         })
     }
@@ -72,15 +87,17 @@ export function saveSettingsRequest(formSettings) {
     }
 }
 
-export function saveSettingsSuccess(deviceSettings, response) {
+export function saveSettingsSuccess(response) {
     let form = getInitialForm;
-    if ('ok' !== response.status) {
-        form = {...form, needSave: true, error: response.error};
+    console.log('saveSettingsSuccess response', response);
+    const result = response.result;
+    if ('SUCCESS' !== result.status) {
+        form = {...form, needSave: true, error: result.errors};
     }
     return {
         type: types.SETTINGS_SAVE_SUCCESS,
         payload: {
-            device: deviceSettings,
+            device: result,
             form
         }
     }
