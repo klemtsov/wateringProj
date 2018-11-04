@@ -1,62 +1,50 @@
 package ru.klemtsov.watering.restserver.model;
 
-import java.time.LocalDateTime;
-
 public class SettingItem {
+    private Integer id;
+    private String settingType;
+    private String key;
+    private String value;
 
-    private String ip;
-    private Integer wateringPeriod;
-    private LocalDateTime wateringStartAt;
-    private Integer startWateringBelowHumidity;
-    private Integer timeWateringInSec;
-    private String serverIp;
-
-    public String getIp() {
-        return ip;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIp(String ip) {
-        this.ip = ip;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getWateringPeriod() {
-        return wateringPeriod;
+    public String getSettingType() {
+        return settingType;
     }
 
-    public void setWateringPeriod(Integer wateringPeriod) {
-        this.wateringPeriod = wateringPeriod;
+    public void setSettingType(String settingType) {
+        this.settingType = settingType;
     }
 
-    public LocalDateTime getWateringStartAt() {
-        return wateringStartAt;
+    public String getKey() {
+        return key;
     }
 
-    public void setWateringStartAt(LocalDateTime wateringStartAt) {
-        this.wateringStartAt = wateringStartAt;
+    public void setKey(String key) {
+        this.key = key;
     }
 
-    public Integer getStartWateringBelowHumidity() {
-        return startWateringBelowHumidity;
+    public String getValue() {
+        return value;
     }
 
-    public void setStartWateringBelowHumidity(Integer startWateringBelowHumidity) {
-        this.startWateringBelowHumidity = startWateringBelowHumidity;
+    public void setValue(String value) {
+        this.value = value;
     }
 
-    public Integer getTimeWateringInSec() {
-        return timeWateringInSec;
+    public SettingItem() {
     }
 
-    public void setTimeWateringInSec(Integer timeWateringInSec) {
-        this.timeWateringInSec = timeWateringInSec;
+    public SettingItem(Integer id, String settingType, String key, String value) {
+        this.id = id;
+        this.settingType = settingType;
+        this.key = key;
+        this.value = value;
     }
-
-    public String getServerIp() {
-        return serverIp;
-    }
-
-    public void setServerIp(String serverIp) {
-        this.serverIp = serverIp;
-    }
-
 }
