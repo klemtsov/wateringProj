@@ -30,7 +30,8 @@ public class StatisticController {
     @RequestMapping(value = "/statistic/getStatisticByPeriod",
             produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
     @ResponseBody
-    public ResponseResult<List<StatisticItem>> getStatisticByPeriod(@RequestBody StatisticByPeriod statisticByPeriod) {
+    public ResponseResult<List<StatisticItem>> getStatisticByPeriod(
+            @RequestBody StatisticByPeriod statisticByPeriod) {
         try {
             ValueKind valueKind = valueKindDAO.getValueKindByCode(statisticByPeriod.getValueTypeCode());
             if (valueKind == null) {
