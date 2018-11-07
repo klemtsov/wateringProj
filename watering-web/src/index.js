@@ -25,12 +25,4 @@ const render = Component => {
 
 render(App);
 
-// webpack Hot Module Replacement API
-if (module.hot) {
-    module.hot.accept('./containers/App', () => {
-        // if you are using harmony modules ({modules:false})
-        render(App);
-        // in all other cases - re-require App manually
-        render(require('./containers/App'))
-    })
-}
+module.hot.accept();

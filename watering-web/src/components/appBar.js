@@ -31,7 +31,7 @@ function ButtonAppBar(props) {
                         <MenuIcon/>
                     </IconButton>
                     <Typography variant="title" color="inherit" className={classes.flex}>
-                        Title
+                        Автополив
                     </Typography>
                     <Button color="inherit">Войти</Button>
                 </Toolbar>
