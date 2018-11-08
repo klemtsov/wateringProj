@@ -1,7 +1,8 @@
 import * as types from '../constants/ActionTypes'
 import axios from 'axios'
-import {rootApi, getSettingsMethod, saveSettingsMethod} from '../constants/api'
-import {getInitialForm} from '../reducers/settings'
+import {getSettingsMethod, saveSettingsMethod} from '../constants/api'
+import {showFetching,} from '../actions/formActions';
+import {SETTING_CHANGED} from "../constants/formTypes";
 
 const config = {
     headers: {
@@ -14,37 +15,28 @@ const config = {
 
 export function getSettings() {
     return dispatch => {
-        dispatch(getSettingsRequest());
+        dispatch(showFetching(true));
 
-        const url = getSettingsMethod;
-        axios.get(url).then(response =>
-            dispatch(getSettingsSuccess(response.data))).catch(response => {
+        axios.get(getSettingsMethod).then(response => {
+            dispatch(showFetching(false));
+            dispatch(getSettingsSuccess(response.data));
+        }).catch(response => {
+            dispatch(showFetching(false));
             dispatch(getSettingsError(response))
         })
     }
 }
 
-export function getSettingsRequest() {
-    return {
-        type: types.SETTINGS_GET_REQUEST,
-        payload: {
-            form: {...getInitialForm, fetching: true}
-        }
-    };
-}
 
 export function getSettingsSuccess(response) {
-    console.log("getSettingsSuccess", response);
     const result = response.result;
     if (response.status !== "SUCCESS") {
-       return getSettingsError(response.errors)
+        return getSettingsError(response.errors)
     }
+
     return {
         type: types.SETTINGS_GET_SUCCESS,
-        payload: {
-            device: result,
-            form: getInitialForm
-        }
+        payload: {device: result}
     }
 }
 
@@ -58,48 +50,43 @@ export function getSettingsError(errorData) {
 
 export function settingChanged(value) {
     return {
-        type: types.SETTING_CHANGED,
+        type: SETTING_CHANGED,
         payload: value
     }
 }
 
 export function saveSettings(settings) {
-    const {form} = settings;
     return dispatch => {
-        dispatch(saveSettingsRequest(form));
+        dispatch(showFetching(true));
 
         const url = saveSettingsMethod;
         console.log('url', url);
+        let isSuccess = false;
+        axios.post(url, JSON.stringify(settings.device), config).then(response => {
+            const result = response.data;
+            const errors = 'SUCCESS' !== result.status ? result.errors : [];
+            isSuccess = 'SUCCESS' === result.status;
+            if (isSuccess) {
+                dispatch(showFetching(false))
+            } else {
+                dispatch(showFetching(false, errors));
 
-        axios.post(url, JSON.stringify(settings.device), config).then(response =>
-            dispatch(saveSettingsSuccess(response.data))).catch(response => {
+            }
+            dispatch(saveSettingsSuccess(response.data));
+            if (isSuccess) {
+                dispatch(settingChanged(false))
+            }
+        }).catch(response => {
+            dispatch(showFetching(false));
             dispatch(saveSettingsError(settings, response))
         })
     }
 }
 
-export function saveSettingsRequest(formSettings) {
-    return {
-        type: types.SETTINGS_SAVE_REQUEST,
-        payload: {
-            form: {...formSettings, fetching: true}
-        }
-    }
-}
-
 export function saveSettingsSuccess(response) {
-    let form = getInitialForm;
-    console.log('saveSettingsSuccess response', response);
-    const result = response.result;
-    if ('SUCCESS' !== result.status) {
-        form = {...form, needSave: true, error: result.errors};
-    }
     return {
         type: types.SETTINGS_SAVE_SUCCESS,
-        payload: {
-            device: result,
-            form
-        }
+        payload: {device: response.result}
     }
 }
 

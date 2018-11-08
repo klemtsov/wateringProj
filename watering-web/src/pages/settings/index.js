@@ -2,16 +2,15 @@ import {connect} from 'react-redux'
 import SettingValues from './Settings'
 import {getSettings, saveSettings, settingChanged} from '../../actions/SettingActions'
 
-const mapStateToProps = function (store) {
+const mapStateToProps = function (state) {
     return ({
-        ...store.settings
+        ...state
     })
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onSave: value => {
-            console.log('onSave param', value);
             dispatch(saveSettings(value))
         },
         onNeedSave: value => {

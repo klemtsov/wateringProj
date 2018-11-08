@@ -33,7 +33,7 @@ class SettingValues extends React.Component {
 
     ipChange = (name, value) => {
         this.setState({name: value});
-        this.props.device[name] = value;
+        this.props.settings.device[name] = value;
         this.props.onNeedSave(true);
     };
 
@@ -43,7 +43,6 @@ class SettingValues extends React.Component {
 
     render() {
         const {classes, ...other} = this.props;
-        console.log('render props', this.props);
         return (
             <div>
                 <form className={classes.container} noValidate autoComplete="off">
@@ -52,7 +51,7 @@ class SettingValues extends React.Component {
                             id="ip"
                             label="IP-адрес устройства:"
                             className={classes.textField}
-                            value={this.props.device.ip}
+                            value={this.props.settings.device.ip}
                             onChange={(e) => this.ipChange('ip', e.target.value)}
                             margin="normal"
                         />
@@ -62,7 +61,7 @@ class SettingValues extends React.Component {
                             id="wateringPeriod"
                             label="Период полива:"
                             className={classes.textField}
-                            value={this.props.device.wateringPeriod}
+                            value={this.props.settings.device.wateringPeriod}
                             onChange={(e) => this.ipChange('wateringPeriod', e.target.value)}
                             margin="normal"/>
                     </div>
@@ -71,7 +70,7 @@ class SettingValues extends React.Component {
                             id="wateringStartAt"
                             label="Время полива:"
                             type="time"
-                            value={this.props.device.wateringStartAt}
+                            value={this.props.settings.device.wateringStartAt}
                             className={classes.textField}
                             onChange={(e) => this.ipChange('wateringStartAt', e.target.value)}
                             InputLabelProps={{
@@ -87,7 +86,7 @@ class SettingValues extends React.Component {
                             id="serverIp"
                             label="Сервер:"
                             className={classes.textField}
-                            value={this.props.device.serverIp}
+                            value={this.props.settings.device.serverIp}
                             onChange={(e) => this.ipChange('serverIp', e.target.value)}
                             margin="normal"/>
                     </div>

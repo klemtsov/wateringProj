@@ -5,11 +5,10 @@ import Button from '@material-ui/core/Button'
 
 function Buttons(props) {
     const {classes} = props;
-    console.log('button props', props);
     return (
         <div>
             <Button variant='contained' size='small' className={classes.button}
-                    onClick={() => props.onSave(props)}
+                    onClick={() => props.onSave(props.settings)}
                     disabled={!props.form.needSave}
                     color='primary'>
                 <SaveIcon className={classNames(classes.leftIcon, classes.iconSmall)}/>

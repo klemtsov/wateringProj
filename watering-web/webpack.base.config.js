@@ -39,7 +39,7 @@ export default new Config().merge({
         })
     ],
     devServer: {
-        contentBase: './public',
+        contentBase: './dist',
         hot: true
     }
 });

@@ -1,79 +1,30 @@
-import React from 'react';
-import {Link, Route, Router} from 'react-router-dom';
-import createBrowserHistory from 'history/createBrowserHistory';
+import {connect} from 'react-redux'
 
-import PropTypes from 'prop-types';
-import {withStyles} from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
+import Routes from "./routes"
 
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
+import {showDrawer} from '../actions/formActions'
 
-import SettingsForm from '../pages/settings';
 
-const drawerWidth = 240;
-
-const styles = theme => ({
-    root: {
-        flexGrow: 1,
-        zIndex: 1,
-        overflow: 'hidden',
-        position: 'relative',
-        display: 'flex'
-    },
-    drawerPaper: {
-        position: 'relative',
-        width: drawerWidth
-    },
-    content: {
-        flexGrow: 1,
-        backgroundColor: theme.palette.background.default,
-        padding: theme.spacing.unit * 3,
-        minWidth: 0 // So the Typography noWrap works
-    },
-    toolbar: theme.mixins.toolbar
-});
-
-const history = createBrowserHistory();
-
-const Routes = props => {
-    const {classes} = props;
-
-    return (
-        <div>
-            <Router history={history}>
-                <div className={classes.root}>
-                    <Drawer
-                        variant="temporary"
-                        classes={{
-                            paper: classes.drawerPaper
-                        }}>
-                        {/* <div className={classes.toolbar} /> */}
-                        <List>
-                            <ListItem button component={Link} to="/">
-                                <ListItemIcon>
-                                    <InboxIcon/>
-                                </ListItemIcon>
-                                <ListItemText primary="Home"/>
-                            </ListItem>
-
-                        </List>
-                    </Drawer>
-                    <main className={classes.content}>
-                        {/* <div className={classes.toolbar} /> */}
-                        <Route exact path="/" component={SettingsForm}/>
-                    </main>
-                </div>
-            </Router>
-        </div>
-    );
+const mapStateToProps = function (state) {
+    return ({
+        ...state.form
+    })
 };
 
-Routes.propTypes = {
-    classes: PropTypes.object.isRequired
+const mapDispatchToProps = (dispatch) => {
+    return {
+        closeDrawer: () => {
+            dispatch(showDrawer(false));
+        },
+        openDrawer: () => {
+            dispatch(showDrawer(true));
+        },
+    }
 };
 
-export default withStyles(styles)(Routes);
+const RoutesContainer = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Routes);
+
+export default RoutesContainer;
