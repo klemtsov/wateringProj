@@ -5,12 +5,16 @@ import org.springframework.lang.Nullable;
 import ru.klemtsov.watering.restserver.dao.ValueKindDAO;
 import ru.klemtsov.watering.restserver.model.StatisticItem;
 import ru.klemtsov.watering.restserver.model.ValueKind;
+import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import static java.time.format.DateTimeFormatter.*;
 import static ru.klemtsov.watering.restserver.Constants.DATETIME_FORMAT;
@@ -33,8 +37,20 @@ public class StatisticItemMapper implements RowMapper<StatisticItem> {
     @Override
     public StatisticItem mapRow(ResultSet rs, int i) throws SQLException {
         ValueKind valueKind = valueKindDAO.getValueKinds().get(rs.getInt("value_kind"));
-        LocalDateTime dateTime = LocalDateTime.parse(rs.getString("value_date"), dateTimeFormatter.get());
-        return new StatisticItem(rs.getInt("id"),
-                valueKind, dateTime, rs.getBigDecimal("value"));
+        SimpleDateFormat format = new SimpleDateFormat(DATETIME_FORMAT);
+        Date dateTime = null;
+        try {
+            dateTime = format.parse(rs.getString("value_date"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+
+        }
+        StatisticItem result = new StatisticItem();
+        result.setValueKind(valueKind);
+        result.setValueDate(dateTime);
+        result.setValue(rs.getBigDecimal("value"));
+        return result;
+//        return new StatisticItem(rs.getInt("id"),
+//                valueKind, dateTime, rs.getBigDecimal("value"));
     }
 }

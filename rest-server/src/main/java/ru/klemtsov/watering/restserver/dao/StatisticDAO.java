@@ -1,5 +1,6 @@
 package ru.klemtsov.watering.restserver.dao;
 
+import com.sun.tools.corba.se.idl.constExpr.Times;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,10 @@ import ru.klemtsov.watering.restserver.model.StatisticItem;
 import ru.klemtsov.watering.restserver.model.ValueKind;
 
 import javax.sql.DataSource;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static ru.klemtsov.watering.restserver.mapper.StatisticItemMapper.BASE_SQL;
@@ -34,8 +37,8 @@ public class StatisticDAO extends JdbcDaoSupport {
         this.setDataSource(dataSource);
     }
 
-    public List<StatisticItem> getStatisticByPeriod(ValueKind valueKind, LocalDateTime dateBegin,
-                                                    LocalDateTime dateEnd) {
+    public List<StatisticItem> getStatisticByPeriod(ValueKind valueKind, Date dateBegin,
+                                                    Date dateEnd) {
         StatisticItemMapper mapper = new StatisticItemMapper(valueKindDAO);
         String query = BASE_SQL +
                 " WHERE value_kind = ? AND value_date >= ? AND value_date <= ? ORDER BY value_date";
@@ -64,6 +67,7 @@ public class StatisticDAO extends JdbcDaoSupport {
                     errors.add(mess);
                 }
                 valueKindId = valueKind.getId();
+
                 Object[] param = new Object[]{valueKindId, i.getValueDate(), i.getValue()};
                 params.add(param);
             }

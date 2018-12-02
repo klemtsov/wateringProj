@@ -12,6 +12,8 @@ import ru.klemtsov.watering.restserver.exception.WateringException;
 import ru.klemtsov.watering.restserver.model.ResponseResult;
 import ru.klemtsov.watering.restserver.model.Settings;
 
+import java.util.Random;
+
 @RestController
 public class SettingController {
     private static final Logger LOGGER = LoggerFactory.getLogger(SettingController.class);
@@ -23,9 +25,11 @@ public class SettingController {
         this.settingsDAO = settingsDAO;
     }
 
-    @RequestMapping(value = "/settings/get", method = RequestMethod.GET)
+    @RequestMapping(value = "api/settings/get", method = RequestMethod.GET)
     public ResponseResult<Settings> getSetting(){
       try {
+          //Random random = new Random();
+          //Thread.sleep(random.nextInt(1500) );
           Settings result = settingsDAO.getSettings();
           LOGGER.info("возвращаем {}", result);
           return ResponseResult.getSuccessfulResult(result);
@@ -36,7 +40,7 @@ public class SettingController {
       }
     }
 
-    @RequestMapping(value = "settings/set", method = RequestMethod.POST)
+    @RequestMapping(value = "api/settings/set", method = RequestMethod.POST)
     public ResponseResult<Settings> setSettings(@RequestBody Settings settings){
         try {
             settingsDAO.setSettings(settings);

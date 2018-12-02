@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import SettingValues from './Settings'
-import {getSettings, saveSettings, settingChanged} from '../../actions/SettingActions'
+import {getSettings, saveSettings, settingChanged} from '../../actions/settingActions'
 
 const mapStateToProps = function (state) {
     return ({

@@ -13,6 +13,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 
 import SettingsForm from '../pages/settings';
+import StatisticForm from '../pages/statistics';
 
 const drawerWidth = 240;
 
@@ -65,7 +66,8 @@ class Routes extends React.Component {
                                     </ListItemIcon>
                                     <ListItemText primary="Настройки"/>
                                 </ListItem>
-                                <ListItem button component={Link} to="/statistic" onClick={() => this.props.closeDrawer()}>
+                                <ListItem button component={Link} to="/statistic"
+                                          onClick={() => this.props.closeDrawer()}>
                                     <ListItemIcon>
                                         <InboxIcon/>
                                     </ListItemIcon>
@@ -77,6 +79,7 @@ class Routes extends React.Component {
                         <main className={classes.content}>
                             {/* <div className={classes.toolbar} /> */}
                             <Route exact path="/" component={SettingsForm}/>
+                            <Route exact path="/statistic" component={StatisticForm}/>
                         </main>
                     </div>
                 </Router>

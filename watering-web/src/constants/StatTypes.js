@@ -1,0 +1,3 @@
+export const REFRESH ="REFRESH";
+export const STAT_GET_SUCCESS ="STAT_GET_SUCCESS";
+export const STAT_GET_ERROR ="STAT_GET_ERROR";

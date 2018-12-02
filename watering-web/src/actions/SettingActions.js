@@ -1,17 +1,11 @@
 import * as types from '../constants/ActionTypes'
 import axios from 'axios'
 import {getSettingsMethod, saveSettingsMethod} from '../constants/api'
-import {showFetching,} from '../actions/formActions';
-import {SETTING_CHANGED} from "../constants/formTypes";
+import {showFetching } from '../actions/formActions';
+import {SETTING_CHANGED} from '../constants/formTypes';
 
-const config = {
-    headers: {
-        'Content-Type': 'application/json;charset=UTF-8',
-        'Access-Control-Allow-Origin': "*",
-        'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE',
-        //'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-    }
-};
+import { getRequestConfig } from '../utils/commons';
+
 
 export function getSettings() {
     return dispatch => {
@@ -62,7 +56,7 @@ export function saveSettings(settings) {
         const url = saveSettingsMethod;
         console.log('url', url);
         let isSuccess = false;
-        axios.post(url, JSON.stringify(settings.device), config).then(response => {
+        axios.post(url, JSON.stringify(settings.device), getRequestConfig()).then(response => {
             const result = response.data;
             const errors = 'SUCCESS' !== result.status ? result.errors : [];
             isSuccess = 'SUCCESS' === result.status;

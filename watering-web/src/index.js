@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './containers/App';
+import AppCnt from './containers';
 import {Provider} from 'react-redux';
 import {applyMiddleware, createStore} from 'redux';
 import thunk from 'redux-thunk';
@@ -14,20 +14,22 @@ export const store = createStore(reducer,
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
-//console.log("store", store.getState());
+console.log("store", store.getState());
+
+window.store = store;
 
 const render = Component => {
     ReactDOM.render(
         <AppContainer>
             <Provider store={store}>
-                <Component/>
+                <Component {...store.getState()}/>
             </Provider>
         </AppContainer>,
         document.getElementById('root'),
     )
 };
 
-render(App);
+render(AppCnt);
 
 // if (module.hot) {
 //     module.hot.accept('./containers/App', () => {
