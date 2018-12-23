@@ -7,11 +7,11 @@ import {SETTING_CHANGED} from '../constants/formTypes';
 import { getRequestConfig } from '../utils/commons';
 
 
-export function getSettings() {
+export function getSettings(id) {
     return dispatch => {
         dispatch(showFetching(true));
-
-        axios.get(getSettingsMethod).then(response => {
+        let url = getSettingsMethod + "?id=" + id;
+        axios.get(url).then(response => {
             dispatch(showFetching(false));
             dispatch(getSettingsSuccess(response.data));
         }).catch(response => {

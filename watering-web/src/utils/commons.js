@@ -2,7 +2,7 @@
 export function getRequestConfig() {
     const ENV = process !== undefined && process.env !== undefined ? process.env.NODE_ENV : "none";
     var config;
-    if (ENV === "development") {
+    /*if (ENV === "development") {*/
         config = {
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8',
@@ -11,14 +11,14 @@ export function getRequestConfig() {
                 //'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
             }
         };
-    } else {
+   /* } else {
         config =
             {
                 headers: {
                     'Content-Type': 'application/json;charset=UTF-8'
                 }
             }
-    }
+    }*/
 
     return config;
 
@@ -27,9 +27,9 @@ export function getRequestConfig() {
 export function getApiHost(){
     const ENV = process !== undefined && process.env !== undefined ? process.env.NODE_ENV : "none";
     var config;
-    if (ENV === "development") {
+    //if (ENV === "development") {
         return "http://localhost:8082/";
-    } else {
-        return "";
-    }
+    //} else {
+    //    return "";
+    //}
 }

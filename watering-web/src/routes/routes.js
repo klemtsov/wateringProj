@@ -14,6 +14,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 
 import SettingsForm from '../pages/settings';
 import StatisticForm from '../pages/statistics';
+import DevicesForm from '../pages/devices';
 
 const drawerWidth = 240;
 
@@ -74,12 +75,21 @@ class Routes extends React.Component {
                                     <ListItemText primary="Статистика"/>
                                 </ListItem>
 
+                                <ListItem button component={Link} to="/devices"
+                                          onClick={() => this.props.closeDrawer()}>
+                                    <ListItemIcon>
+                                        <InboxIcon/>
+                                    </ListItemIcon>
+                                    <ListItemText primary="Устройства"/>
+                                </ListItem>
+
                             </List>
                         </Drawer>
                         <main className={classes.content}>
                             {/* <div className={classes.toolbar} /> */}
                             <Route exact path="/" component={SettingsForm}/>
                             <Route exact path="/statistic" component={StatisticForm}/>
+                            <Route exact path="/devices" component={DevicesForm}/>
                         </main>
                     </div>
                 </Router>

@@ -16,7 +16,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         onNeedSave: value => {
             dispatch(settingChanged(value))
         },
-        loadData: () => dispatch(getSettings())
+        loadData: (id) => dispatch(getSettings(id))
     }
 };
 

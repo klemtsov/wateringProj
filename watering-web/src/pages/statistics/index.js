@@ -1,3 +1,4 @@
+/*
 import {connect} from 'react-redux'
 import HumidityLine from './Statistics'
 import {refresh} from '../../actions/StatActions.js'
@@ -24,4 +25,4 @@ const HumidityLineForm = connect(
     mapDispatchToProps
 )(HumidityLine);
 
-export default HumidityLineForm
+export default HumidityLineForm*/

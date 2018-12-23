@@ -8,3 +8,7 @@ export const getSettingsMethod = rootSettings + 'get';
 export const saveSettingsMethod = rootSettings + 'set';
 export const rootStatistic = rootApi + 'statistic/';
 export const getGraphDataByPeriodMethod = rootStatistic + 'getGraphDataByPeriod';
+export const rootDevices = rootApi + 'device/';
+export const getDevicesMethod = rootDevices + 'getAll';
+export const getDeviceSettingsMethod = rootDevices + 'getDetail';
+export const saveDeviceSettingsMethod = rootDevices + 'saveDetails';

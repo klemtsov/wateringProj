@@ -40,7 +40,7 @@ class SettingValues extends React.Component {
     };
 
     componentDidMount() {
-        this.props.loadData(); // Вызываем загрузку
+        this.props.loadData(1); // Вызываем загрузку
     }
 
     render() {
