@@ -1,0 +1,5 @@
+export const DRAWER_VISIBLE = "DRAWER_VISIBLE";
+export const DRAWER_OPEN = "DRAWER_OPEN";
+export const FETCH_CHANGE = "FETCH_CHANGE";
+export const SAVE_CHANGED = "SAVE_CHANGED";
+export const SETTING_CHANGED = 'SETTING_CHANGED';

@@ -24,6 +24,7 @@
     <modules>
         <module>rest-server</module>
         <module>watering-web</module>
+        <module>device-watering</module>
     </modules>
 
     <dependencyManagement>
