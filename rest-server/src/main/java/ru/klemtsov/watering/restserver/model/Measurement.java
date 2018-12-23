@@ -6,26 +6,33 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import ru.klemtsov.watering.restserver.jsonUtils.JsonDateDeserializer;
 import ru.klemtsov.watering.restserver.jsonUtils.JsonDateSerializer;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-public class StatisticItem {
+@Entity(name = "Measurement")
+public class Measurement implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private ValueKind valueKind;
-    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    //@JsonDeserialize(using = JsonDateDeserializer.class)
-    //@JsonSerialize(using = JsonDateSerializer.class)
+
+
+    @JoinColumn(name = "device_id")
+    @ManyToOne(cascade = CascadeType.ALL, targetEntity = Device.class)
+    private Integer deviceId;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name ="value_kind")
+    private MeasurementValueKind valueKind;
+
+    @Temporal(value = TemporalType.TIMESTAMP)
+    @Column(name = "value_date")
     private Date valueDate;
     private BigDecimal value;
-
-
-//    public StatisticItem(Integer id, ValueKind valueKind, LocalDateTime valueDate, BigDecimal value) {
-//        this.id = id;
-//        this.valueKind = valueKind;
-//        this.valueDate = valueDate;
-//        this.value = value;
-//    }
 
     public Integer getId() {
         return id;
@@ -35,12 +42,12 @@ public class StatisticItem {
         this.id = id;
     }
 
-    public ValueKind getValueKind() {
-        return valueKind;
+    public Integer getDeviceId() {
+        return deviceId;
     }
 
-    public void setValueKind(ValueKind valueKind) {
-        this.valueKind = valueKind;
+    public void setDeviceId(Integer deviceId) {
+        this.deviceId = deviceId;
     }
 
     public Date getValueDate() {
@@ -61,9 +68,9 @@ public class StatisticItem {
 
     @Override
     public String toString() {
-        return "StatisticItem{" +
+        return "Measurement{" +
                 "id=" + id +
-                ", valueKind=" + valueKind +
+                ", deviceId=" + deviceId +
                 ", valueDate=" + valueDate.toString() +
                 ", value=" + value +
                 '}';

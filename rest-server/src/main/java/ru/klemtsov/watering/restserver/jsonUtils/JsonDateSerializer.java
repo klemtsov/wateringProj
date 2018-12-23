@@ -6,17 +6,22 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
-public class JsonDateSerializer extends JsonSerializer <LocalDateTime>{
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+import static ru.klemtsov.watering.restserver.Constants.DATETIME_FORMAT;
+import static ru.klemtsov.watering.restserver.Constants.DATETIME_FORMAT_WTZ;
+
+public class JsonDateSerializer extends JsonSerializer <Date>{
+    private SimpleDateFormat format = new SimpleDateFormat(DATETIME_FORMAT_WTZ);
 
 
     @Override
-    public void serialize(LocalDateTime date, JsonGenerator generator, SerializerProvider arg2)
-            throws IOException, JsonProcessingException {
-        final String dateString = date.format(this.formatter);
+    public void serialize(Date date, JsonGenerator generator, SerializerProvider arg2)
+            throws IOException {
+        final String dateString = format.format(date);
         generator.writeString(dateString);
     }
 }

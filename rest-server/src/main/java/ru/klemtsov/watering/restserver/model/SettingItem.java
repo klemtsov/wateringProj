@@ -1,10 +1,27 @@
 package ru.klemtsov.watering.restserver.model;
 
-public class SettingItem {
+import javax.persistence.*;
+import java.io.Serializable;
+
+
+@Entity(name = "setting_item")
+public class SettingItem implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String settingType;
-    private String key;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "setting_type")
+    private SettingItemType settingType;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "device_id")
+    private Device device;
+
     private String value;
+
+
 
     public Integer getId() {
         return id;
@@ -14,20 +31,20 @@ public class SettingItem {
         this.id = id;
     }
 
-    public String getSettingType() {
+    public SettingItemType getSettingType() {
         return settingType;
     }
 
-    public void setSettingType(String settingType) {
+    public void setSettingType(SettingItemType settingType) {
         this.settingType = settingType;
     }
 
-    public String getKey() {
-        return key;
+    public Device getDevice() {
+        return device;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setDevice(Device device) {
+        this.device = device;
     }
 
     public String getValue() {
@@ -35,16 +52,6 @@ public class SettingItem {
     }
 
     public void setValue(String value) {
-        this.value = value;
-    }
-
-    public SettingItem() {
-    }
-
-    public SettingItem(Integer id, String settingType, String key, String value) {
-        this.id = id;
-        this.settingType = settingType;
-        this.key = key;
         this.value = value;
     }
 }
